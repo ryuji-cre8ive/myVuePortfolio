@@ -1,0 +1,432 @@
+
+button{
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+}
+
+
+html{
+  background-color: #f7f7f7;
+}
+
+a{
+  text-decoration: none;
+  color: #cfcfcf
+}
+
+
+
+#nav{
+  z-index: 100;
+  font-size: 30px;
+  background-color: #f7f7f7;
+  opacity: 0.6;
+  padding: 30px 0;
+}
+.link{
+  padding: 10px 50px;
+  text-decoration: none;
+  color: #000;
+}
+.top{
+  position: relative;
+  height: 600px;
+}
+
+.top_sent{
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  font-size: 100px;
+  background-color: white;
+  width: 400px;
+  height: 400px;
+  box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
+  transition: .5s;
+}
+
+/* enter、 leave アニメーションで異なる間隔やタイミング関数を利用することができます */
+.fade-enter-active , .fade-leave-active{
+  transition: opacity 1s;
+  transition: 1.5s ease;
+}
+.fade-enter, .fade-leave-active
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  left: -30%;
+}
+
+
+.deco{
+  position: absolute;
+  top: 20%;
+  right: 0%;
+  background-color: #6699cc;
+  width: 50%;
+  height: 70%;
+  box-shadow: 20px 20px 20px 10px rgba(0,0,0,0.4);
+}
+
+.deco-enter-active, .deco-leave-active{
+  transition: 2s ease;
+}
+.deco-enter, .deco-leave-active{
+  right: -30%;
+}
+
+.menu{
+  position: fixed;
+  top: 40%;
+  right:10%;
+  width: 10%;
+  height: 350px;
+  background: white;
+  z-index: 200;
+  border-radius: 5%;
+  box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
+  .menu_{
+    padding: 60px 20px;
+    font-size: 30px;
+    text-decoration: none;
+    list-style: none;
+    li{
+      padding: 10px 0;
+      :hover{
+        color: #f9f9ff;
+        transition: .3s;
+      }
+    }
+    nuxt-link{
+      text-decoration: none;
+      color: #7c7c7c;
+      
+    }
+  }
+}
+
+.fade-menu-enter-active, .fade-menu-leave-active{
+  transition: 2s ease;
+}
+.fade-menu-enter, .fade-menu-leave-active{
+  top: 100%;
+}
+
+.about{
+  width: 100%;
+  height: 600px;
+  margin-right: 500px;
+}
+
+.ryuji_photo{
+  width: 100%;
+  top: 50%;
+  left: 10%;
+  img{
+    width: 100%;
+    border-radius: 50%;
+    border: solid 5px #efefef;
+    box-shadow: 20px 20px 10px rgba(0,0,0,0.4);
+  }
+}
+
+.img-enter-active, .img-leave-active{
+  transition: 2s;
+}
+.img-enter, .img-leave-active{
+  top: 100%;
+}
+
+
+.exp{
+  display: flex;
+  margin: 100px;
+  margin-left: 150px;
+  margin-top: 200px;
+}
+.sentense{
+  padding: 30px 100px;
+  height: 40%;
+  position: block;
+  top: 50%;
+  right: 30%;
+  margin-right: 300px;
+  text-shadow: 20px 20px 10px rgba(0,0,0,0.4);
+}
+
+.skills{
+  background-color:#191970;
+  text-align: center;
+  color: white;
+  padding: 200px 0 100px 0;
+  position: relative;
+  ::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: 10vw solid #f7f7f7;  /* 三角をグレーにする */ 
+    border-left: 100vw solid transparent;
+  }
+  h1{
+    margin-right: 130px;
+  }
+  h3{
+    font-size: 30px;
+  }
+  .skill{
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+    font-size: 20px;
+    margin-right: 200px;
+    .skill-element{
+      margin: 0 100px;
+      p{
+        padding: 10px;
+      }
+    }
+  }
+}
+
+.links{
+  padding-top: 200px;
+  height: 400px;
+  background: #f7f7f7;
+  position: relative;
+  text-align: center;
+  margin-right: 200px;
+  ::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: 10vw solid #191970;  /* 三角を白にする */ 
+    border-left: 100vw solid transparent;
+
+  }
+  .link{
+    margin: 20px;
+    .twitter{
+      :hover{
+        color: #0B9BF5;
+        transition: .3s;
+      }
+    }
+    .github{
+      :hover{
+        color: #030303;
+        transition: .3s;
+      }
+    }
+    .insta{
+      :hover{
+        color:#D958E5;
+        transition: .3s;
+      }
+    }
+    .spotify{
+      :hover{
+        color:#30D819;
+        transition: .3s;
+      }
+    }
+    .icon{
+      margin: 20px;
+      
+      
+    }
+  }
+}
+
+.svg-inline--fa.fa-w-16 {
+  width: 3em;
+  height: 3rem;
+}
+
+.svg-inline--fa.fa-w-14 {
+  width: 3rem;
+  height: 3rem;
+}
+
+.works{
+  height: 2050px;
+  position: relative;
+  .square{
+    p{
+      font-size: 30px;
+      user-select: none;
+    }
+    margin: 80px;
+    margin-left: 25%;
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+    width: 400px;
+    height: 420px;
+    position: relative;
+    box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
+    opacity: 1;
+    img{
+      width: 300px;
+    }
+    .btn-border {
+      border: 2px solid #000;
+      background: #fff;
+      padding: 10px 30px;
+      margin-top: 50px;
+    }
+    .btn-border:hover {
+      color: #fff;
+      background: #000;
+      transition: .3s;
+    }
+  }
+
+  .bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .modal {
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 70%;
+    z-index: 500;
+    transform: .3s;
+    .modal-wrap {
+      background-color: rgba(0,0,0,0.5);
+      height: 100%;
+      z-index: 500;
+      top: 30%;
+      transform: .3s;
+
+      .text{
+        color: white;
+        padding: 40px;
+        padding-top: 15%;
+        h1{
+          font-size: 42px;
+          margin-bottom: 30px;
+        }
+        p{
+          font-size: 20px;
+          padding: 0 20%;
+        }
+      }
+     }
+   }
+}
+
+.work3-enter-active, .work3-leave-active{
+  transition: 3s ease;
+}
+.work3-enter, .work3-leave-active{
+  opacity: 0;
+  top: 100%;
+}
+
+.contact{
+  text-align: center;
+  margin-top: 100px;
+  h1{
+    font: 36px sans-serif
+  }
+  .buttons{
+    position: absolute;
+    top: 60%;
+    right: 40%;
+    button{
+      padding: 10px 20px;
+      margin: 10px; 
+    }
+    :hover{
+      color: white;
+      background: #000;
+      transition: .3s;
+    }
+  }
+}
+//コピペ
+.cp_iptxt {
+	position: relative;
+	width: 50%;
+	margin: 40px 3%;
+}
+.cp_iptxt input[type='text'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 50%;
+	letter-spacing: 1px;
+	padding-left: 4em;
+}
+.cp_iptxt input[type='text']:focus {
+	outline: none;
+}
+.cp_iptxt input[type='email'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 50%;
+	letter-spacing: 1px;
+	padding-left: 4em;
+}
+.cp_iptxt input[type='email']:focus {
+	outline: none;
+}
+.cp_iptxt input[type='textbox'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 50%;
+	letter-spacing: 1px;
+	padding-left: 4em;
+}
+.cp_iptxt input[type='textbox']:focus {
+	outline: none;
+}
+.ef {
+	padding: 4px 0;
+	border: 0;
+	border-bottom: 1px solid #1b2538;
+	background-color: transparent;
+}
+.ef ~ .focus_line {
+	position: absolute;
+	bottom: 0;
+	left: 27%;
+	width: 0;
+	height: 2px;
+	transition: 0.4s;
+	background-color: #da3c41;
+}
+.ef:focus ~ .focus_line,
+.cp_iptxt.ef ~ .focus_line {
+	width: 50%;
+	transition: 0.4s;
+}
+.ef ~ label {
+	position: absolute;
+	z-index: -1;
+	top: 4px;
+	left: 0;
+	width: 50%;
+	transition: 0.3s;
+	letter-spacing: 0.5px;
+	color: #aaaaaa;
+}
+.ef:focus ~ label, .cp_iptxt.ef ~ label {
+	font-size: 12px;
+	top: -16px;
+	transition: 0.3s;
+	color: #da3c41;
+}
+
+.article{
+  position: absolute;
+  right: 30px;
+}

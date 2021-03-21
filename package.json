@@ -1,0 +1,38 @@
+{
+  "name": "nuxt-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "server": "node ./post/index.js"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.34",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
+    "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/proxy": "^2.1.0",
+    "@slack/web-api": "^6.1.0",
+    "animate.css": "^4.1.1",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "core-js": "^3.8.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "node-sass": "^5.0.0",
+    "nuxt": "^2.14.12",
+    "nuxt-fontawesome": "^0.4.0",
+    "querystring": "^0.2.1",
+    "sass-loader": "^10.1.1",
+    "vue-scrollmagic": "^1.2.0"
+  },
+  "devDependencies": {
+    "@fortawesome/free-brands-svg-icons": "^5.15.2",
+    "@fortawesome/free-regular-svg-icons": "^5.15.2",
+    "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@nuxtjs/fontawesome": "^1.1.2"
+  }
+}
