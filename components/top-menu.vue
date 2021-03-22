@@ -17,7 +17,7 @@ export default {
         {url: "/about", text: "About"},
         {url: "/works", text: "Works"},
         {url: "/contact", text: "Contact"},
-        {url: "/article", text: "Article"}
+        // {url: "/article", text: "Article"}
       ]
     }
   }

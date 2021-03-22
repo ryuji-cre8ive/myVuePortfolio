@@ -1,10 +1,9 @@
 <template>
   <div>
     <ul>
-      <!-- <li v-for="article in articles" :key="article.id">
-        <nuxt-link :to="{name: 'articles-id', params: { id: article.id }}"> {{article.content.title}}</nuxt-link>
-      </li> -->
-      <li v-for="post in posts" :key="post.id">{{post.content.title}}</li>
+      <li v-for="post in posts" :key="post.id">
+        <nuxt-link :to="{name: 'articles-id', params: { id: post.id }}"> {{post.content.title}}</nuxt-link>
+      </li>
     </ul>
   </div>
 </template>
@@ -18,8 +17,7 @@ export default {
     }
   },
   mounted(){
-    const res = axios.get('http://localhost:8080/data').then(res => this.posts = res.data)
-    console.log(res)
+    axios.get('http://localhost:8080/data').then(res => this.posts = res.data)
   }
 }
 </script>

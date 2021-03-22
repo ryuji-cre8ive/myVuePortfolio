@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 require('dotenv').config();
 const { WebClient } = require('@slack/web-api');
+const cors = require('cors');
+
 
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN.toString();
 const messageChannel = process.env.MSGCHANNEL.toString();
@@ -24,6 +26,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(helmet());
+app.use(cors());
 
 
 app.get('/', (req, res) => {
