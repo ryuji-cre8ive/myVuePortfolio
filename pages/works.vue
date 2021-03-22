@@ -6,6 +6,7 @@
     <transition name="work3" mode="out-in">
       <Work3 />
     </transition>
+    <Work4 />
     <Myyear />
   </div>
 </template>
