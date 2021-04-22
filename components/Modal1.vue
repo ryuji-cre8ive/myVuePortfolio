@@ -9,7 +9,7 @@
             <p>React製のTodoApp。最初にReactの学習に際し、重要な要素であるpropやstateを理解するために試しに作ってみた。なお使った技術は既に忘れてしまったなんて口が裂けても言えない。</p>
           </div>
           <button @click="$emit('closeModal')">
-            <a class="btn btn-border" target="_blank" href="https://hungry-shaw-de6d95.netlify.app/">Link</a>
+            <a class="btn btn-border" target="_blank" href="https://pedantic-yalow-86e6f2.netlify.app/">Link</a>
           </button>
         </div>
      <!-- このボタンを押すとカスタムイベントcloseModalが発生 -->

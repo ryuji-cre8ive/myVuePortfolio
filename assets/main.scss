@@ -1,3 +1,6 @@
+$pc: 1980px; // PC
+$tab: 680px; // タブレット
+$sp: 1024px;  // スマホ
 
 button{
   background-color: transparent;
@@ -18,7 +21,17 @@ a{
 }
 
 
+@mixin pc {
+  @media (max-width: ($pc)){
+    @content;
+  }
+}
 
+@mixin sp {
+  @media (max-width: ($sp)){
+    @content;
+  }
+}
 #nav{
   z-index: 100;
   font-size: 30px;
@@ -37,15 +50,26 @@ a{
 }
 
 .top_sent{
-  position: absolute;
-  top: 30%;
-  left: 10%;
-  font-size: 100px;
-  background-color: white;
-  width: 400px;
-  height: 400px;
-  box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
-  transition: .5s;
+  @include pc {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    font-size: 100px;
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
+    transition: .5s;
+  }
+  @include sp {
+    top: 0;
+    left: 5%;
+    width: 65%;
+    height: 45%;
+    font-size: 400%;
+    padding: 10px;
+  }
+  
 }
 
 /* enter、 leave アニメーションで異なる間隔やタイミング関数を利用することができます */
@@ -61,13 +85,24 @@ a{
 
 
 .deco{
-  position: absolute;
-  top: 20%;
-  right: 0%;
-  background-color: #6699cc;
-  width: 50%;
-  height: 70%;
-  box-shadow: 20px 20px 20px 10px rgba(0,0,0,0.4);
+  @include pc{  
+    position: absolute;
+    top: 20%;
+    right: 0%;
+    background-color: #6699cc;
+    width: 50%;
+    height: 50%;
+    box-shadow: 20px 20px 20px 10px rgba(0,0,0,0.4);
+  }
+  @include sp{
+    position: absolute;
+    top: 65%;
+    width: 70%;
+    height: 30%;
+    z-index: -10;
+    box-shadow: 10px 10px 30px 1px rgba(0,0,0,0.4);
+  }
+  
 }
 
 .deco-enter-active, .deco-leave-active{
@@ -78,32 +113,93 @@ a{
 }
 
 .menu{
-  position: fixed;
-  top: 40%;
-  right:10%;
-  width: 10%;
-  height: 350px;
-  background: white;
-  z-index: 200;
-  border-radius: 5%;
-  box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
-  .menu_{
-    padding: 60px 20px;
-    font-size: 30px;
-    text-decoration: none;
-    list-style: none;
-    li{
-      padding: 10px 0;
-      :hover{
-        color: #f9f9ff;
-        transition: .3s;
+  @include pc {
+    position: fixed;
+    top: 40%;
+    right:10%;
+    width: 10%;
+    height: 350px;
+    background: white;
+    z-index: 200;
+    border-radius: 5%;
+    box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
+    .menu_{
+      padding: 60px 20px;
+      font-size: 30px;
+      text-decoration: none;
+      list-style: none;
+      li{
+        padding: 10px 0;
+        :hover{
+          color: #f9f9ff;
+          transition: .3s;
+        }
+      }
+      nuxt-link{
+        text-decoration: none;
+        color: #7c7c7c;
+        
       }
     }
-    nuxt-link{
-      text-decoration: none;
-      color: #7c7c7c;
-      
+  }
+
+  @include sp{
+    // .menu_{
+    //   padding: 1px;
+    //   display: flex;
+    //   font-size: 24px;
+    //   justify-content: space-around;
+    //   background: #354B5E;
+    //   li{
+    //     padding: 20px 10px
+    //   }
+    // }
+    display: none;
+  }
+  
+}
+
+.svg-inline--fa.fa-w-16 {
+  width: 30px;
+  height: 30px; 
+}
+
+.sp-menu-top{
+  @include pc{
+    display: none;
+  }
+  @include sp{
+    display: flex;
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 60px;
+    top: 0;
+    right: 0;
+    box-shadow: 0 30px 30px rgba(0,0,0,0.4);
+  }
+  
+}
+.sp-menu{
+  @include pc{
+    display: none;
+  }
+  @include sp{
+    width: 100%;
+    background: white;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    padding: 30px 0;
+    .sp-menu-icon{
+      width: 35px;
+      height: 35px;
     }
+    li{
+      list-style: none;
+    }
+    
   }
 }
 
@@ -111,24 +207,42 @@ a{
   transition: 2s ease;
 }
 .fade-menu-enter, .fade-menu-leave-active{
-  top: 100%;
+  opacity: .4;
 }
 
 .about{
-  width: 100%;
-  height: 600px;
-  margin-right: 500px;
+  @include sp {
+    width: 100%;
+    height: auto;
+
+  }
+  @include pc {
+    width: 100%;
+    height: 600px;
+    margin-right: 500px;
+  }
+  
 }
 
 .ryuji_photo{
-  width: 100%;
-  top: 50%;
-  left: 10%;
-  img{
+  @include pc{
+    width: 130%;
+    top: 50%;
+    left: 10%;
+    img{
+      width: 100%;
+      border-radius: 50%;
+      border: solid 5px #efefef;
+      box-shadow: 20px 20px 10px rgba(0,0,0,0.4);
+    }
+  }
+  @include sp{
     width: 100%;
-    border-radius: 50%;
-    border: solid 5px #efefef;
-    box-shadow: 20px 20px 10px rgba(0,0,0,0.4);
+    img{
+      border-radius: 20%;
+      border: solid 5px #cccccc;
+      box-shadow: 20px 20px 30px rgba(0,0,0,0.4);
+    }
   }
 }
 
@@ -141,187 +255,308 @@ a{
 
 
 .exp{
-  display: flex;
-  margin: 100px;
-  margin-left: 150px;
-  margin-top: 200px;
+  @include pc {
+    display: flex;
+    margin: 100px;
+    margin-left: 150px;
+    margin-top: 200px;
+  }
+  @include sp{
+    margin: 10px;
+    display: block;
+    margin-top: 80px;
+  }
+  
 }
 .sentense{
-  padding: 30px 100px;
-  height: 40%;
-  position: block;
-  top: 50%;
-  right: 30%;
-  margin-right: 300px;
-  text-shadow: 20px 20px 10px rgba(0,0,0,0.4);
+  @include pc {
+    height: 40%;
+    position: block;
+    top: 50%;
+    right: 30%;
+    margin-right: 300px;
+    text-shadow: 20px 20px 10px rgba(0,0,0,0.4);
+    p{
+      padding: 40px 150px;
+    }
+  }
+  @include sp {
+    p{
+      padding: 30px 10px;
+    }
+    margin-top: 80px;
+    padding: 10px;
+    height: auto;
+    margin-right: 0;
+  }
 }
 
 .skills{
-  background-color:#191970;
-  text-align: center;
-  color: white;
-  padding: 200px 0 100px 0;
-  position: relative;
-  ::after{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-top: 10vw solid #f7f7f7;  /* 三角をグレーにする */ 
-    border-left: 100vw solid transparent;
+  @include pc {
+    background-color:#191970;
+    text-align: center;
+    color: white;
+    padding: 200px 0 100px 0;
+    position: relative;
+    ::after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-top: 10vw solid #f7f7f7;  /* 三角をグレーにする */ 
+      border-left: 100vw solid transparent;
+    }
+    h1{
+      margin-right: 130px;
+    }
+    h3{
+      font-size: 30px;
+    }
+    .skill{
+      display: flex;
+      justify-content: center;
+      margin: 50px;
+      font-size: 20px;
+      margin-right: 200px;
+      .skill-element{
+        margin: 0 100px;
+        p{
+          padding: 10px;
+        }
+      }
+    }
   }
-  h1{
-    margin-right: 130px;
-  }
-  h3{
-    font-size: 30px;
-  }
-  .skill{
-    display: flex;
-    justify-content: center;
-    margin: 50px;
-    font-size: 20px;
-    margin-right: 200px;
-    .skill-element{
-      margin: 0 100px;
-      p{
-        padding: 10px;
+  
+  @include sp {
+    margin-top: 80px;
+    ::after{
+      border-top: 20vw solid #f7f7f7;  /* 三角をグレーにする */ 
+      border-left: 100vw solid transparent;
+    }
+    h1{
+      margin-right: 0;
+      font-size: 40px;
+    }
+    p{
+      font-size: 25px;
+    }
+    .skill{
+      display: block;
+      margin: 10px;
+      .skill-element{
+        margin: 50px 10px;
       }
     }
   }
 }
+
+.skill-element{
+  opacity: 0;
+  transition: 2s;
+}
+.skill-element.show{
+  opacity: 1;
+  text-shadow: 20px 20px 10px rgba(0,0,0,0.4);
+}
+
+
 
 .links{
-  padding-top: 200px;
-  height: 400px;
-  background: #f7f7f7;
-  position: relative;
-  text-align: center;
-  margin-right: 200px;
-  ::after{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-top: 10vw solid #191970;  /* 三角を白にする */ 
-    border-left: 100vw solid transparent;
+  @include pc {
+    padding-top: 200px;
+    height: 400px;
+    background: #f7f7f7;
+    position: relative;
+    text-align: center;
+    margin-right: 200px;
+    ::after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-top: 10vw solid #191970;  /* 三角を白にする */ 
+      border-left: 100vw solid transparent;
 
-  }
-  .link{
-    margin: 20px;
-    .twitter{
-      :hover{
-        color: #0B9BF5;
-        transition: .3s;
-      }
     }
-    .github{
-      :hover{
-        color: #030303;
-        transition: .3s;
-      }
+    .svg-inline--fa.fa-w-16 {
+      width: 3em;
+      height: 3rem;
     }
-    .insta{
-      :hover{
-        color:#D958E5;
-        transition: .3s;
-      }
+    
+    .svg-inline--fa.fa-w-14 {
+      width: 3rem;
+      height: 3rem;
     }
-    .spotify{
-      :hover{
-        color:#30D819;
-        transition: .3s;
-      }
-    }
-    .icon{
+    .link{
       margin: 20px;
-      
-      
+      .twitter{
+        :hover{
+          color: #0B9BF5;
+          transition: .3s;
+        }
+      }
+      .github{
+        :hover{
+          color: #030303;
+          transition: .3s;
+        }
+      }
+      .insta{
+        :hover{
+          color:#D958E5;
+          transition: .3s;
+        }
+      }
+      .spotify{
+        :hover{
+          color:#30D819;
+          transition: .3s;
+        }
+      }
+      .icon{
+        margin: 20px;
+      }
+    }
+  }
+  @include sp{
+    
+    margin-right: 0;
+    ::after{
+      border-top: 20vw solid #191970;  /* 三角を白にする */ 
+      border-left: 100vw solid transparent;
+    }
+    h1{
+      font-size: 40px;
+    }
+    .link{
+      margin-top: 50px;
+      padding: 0;
+      a{
+        margin: 0;
+      }
+      .icon{
+        margin: 10px;
+      }
     }
   }
 }
 
-.svg-inline--fa.fa-w-16 {
-  width: 3em;
-  height: 3rem;
+.animationTarget{
+  opacity: 0;
+  transition: .6s;
+  transform: translateY(50px);
 }
 
-.svg-inline--fa.fa-w-14 {
-  width: 3rem;
-  height: 3rem;
+.animationTarget.work{
+  opacity: 1;
+  transform: none;
 }
+
+
 
 .works{
-  height: 2500px;
-  position: relative;
-  .square{
-    p{
-      font-size: 30px;
-      user-select: none;
-    }
-    margin: 80px;
-    margin-left: 25%;
-    padding: 20px;
-    text-align: center;
-    background: #fff;
-    width: 400px;
-    height: 420px;
+  @include pc {
+    height: 2500px;
     position: relative;
-    box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
-    opacity: 1;
-    img{
-      width: 300px;
-    }
-    .btn-border {
-      border: 2px solid #000;
+    .square{
+      p{
+        font-size: 30px;
+        user-select: none;
+      }
+      margin: 80px;
+      margin-left: 25%;
+      padding: 20px;
+      text-align: center;
       background: #fff;
-      padding: 10px 30px;
-      margin-top: 50px;
+      width: 400px;
+      height: 420px;
+      position: relative;
+      box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
+      opacity: 1;
+      img{
+        width: 300px;
+      }
+      .btn-border {
+        border: 2px solid #000;
+        background: #fff;
+        padding: 10px 30px;
+        margin-top: 50px;
+      }
+      .btn-border:hover {
+        color: #fff;
+        background: #000;
+        transition: .3s;
+      }
     }
-    .btn-border:hover {
-      color: #fff;
-      background: #000;
-      transition: .3s;
-    }
-  }
 
-  .bg{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .modal {
-    position: fixed;
-    top: 10%;
-    left: 10%;
-    width: 80%;
-    height: 70%;
-    z-index: 500;
-    transform: .3s;
-    .modal-wrap {
-      background-color: rgba(0,0,0,0.5);
+    .bg{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
       height: 100%;
+    }
+    .modal {
+      position: fixed;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 70%;
       z-index: 500;
-      top: 30%;
       transform: .3s;
+      .modal-wrap {
+        background-color: rgba(0,0,0,0.5);
+        height: 100%;
+        z-index: 500;
+        top: 30%;
+        transform: .3s;
 
-      .text{
-        color: white;
-        padding: 40px;
-        padding-top: 15%;
-        h1{
-          font-size: 42px;
-          margin-bottom: 30px;
-        }
-        p{
-          font-size: 20px;
-          padding: 0 20%;
+        .text{
+          color: white;
+          padding: 40px;
+          padding-top: 15%;
+          h1{
+            font-size: 42px;
+            margin-bottom: 30px;
+          }
+          p{
+            font-size: 20px;
+            padding: 0 20%;
+          }
         }
       }
-     }
-   }
+    }
+  }
+  @include sp {
+    .square{
+      margin: 60px 30px;
+      width: auto;
+      box-shadow: 10px 10px 30px 3px rgba(0,0,0,0.4);
+      img{
+        width: 100%;
+      }
+      iframe{
+        width: 100%;
+      }
+      .modal{
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        .modal-wrap {
+          .text{
+            padding: 50px 20px;
+            p{
+              padding: 10px;
+              font-size: 20px;
+            }
+            
+          }
+        }
+      }
+    }
+    
+  }
 }
 
 .work3-enter-active, .work3-leave-active{
@@ -333,76 +568,131 @@ a{
 }
 
 .contact{
-  text-align: center;
-  margin-top: 100px;
-  h1{
-    font: 36px sans-serif
-  }
-  .buttons{
-    position: absolute;
-    top: 60%;
-    right: 40%;
-    button{
-      padding: 10px 20px;
-      margin: 10px; 
+  @include pc{
+    text-align: center;
+    margin-top: 100px;
+    h1{
+      font: 36px sans-serif
     }
-    :hover{
-      color: white;
-      background: #000;
-      transition: .3s;
+    .buttons{
+      top: 60%;
+      right: 40%;
+      button{
+        padding: 10px 20px;
+        margin: 10px; 
+      }
+      :hover{
+        color: white;
+        background: #000;
+        transition: .3s;
+      }
     }
   }
+
+  @include sp{
+    margin-top: 50px;
+    h1{
+      font: 25px sans-serif
+    }
+    .buttons{
+      top: 70%;
+      right: 10%
+    }
+  }
+  
 }
 //コピペ
 .cp_iptxt {
-	position: relative;
-	width: 50%;
-	margin: 40px 3%;
+  @include pc{
+    position: relative;
+    width: 50%;
+    margin: 40px 3%;
+  }
+  @include sp {
+    width: 100%;
+    margin: 30px 5px;
+  }
+	
 }
 .cp_iptxt input[type='text'] {
-	font: 15px/24px sans-serif;
-	box-sizing: border-box;
-	width: 50%;
-	letter-spacing: 1px;
-	padding-left: 4em;
+  @include pc{
+    font: 15px/24px sans-serif;
+    box-sizing: border-box;
+    width: 50%;
+    letter-spacing: 1px;
+    padding-left: 4em;
+  }
+  @include sp {
+    padding-left: 1em;
+    margin-left: 20px;
+  }
+	
 }
 .cp_iptxt input[type='text']:focus {
 	outline: none;
 }
 .cp_iptxt input[type='email'] {
-	font: 15px/24px sans-serif;
-	box-sizing: border-box;
-	width: 50%;
-	letter-spacing: 1px;
-	padding-left: 4em;
+  @include pc{
+    font: 15px/24px sans-serif;
+    box-sizing: border-box;
+    width: 50%;
+    letter-spacing: 1px;
+    padding-left: 4em;
+  }
+  @include sp {
+    padding-left: 1em;
+    margin-left: 20px;
+  }
+	
 }
 .cp_iptxt input[type='email']:focus {
 	outline: none;
 }
 .cp_iptxt input[type='textbox'] {
-	font: 15px/24px sans-serif;
-	box-sizing: border-box;
-	width: 50%;
-	letter-spacing: 1px;
-	padding-left: 4em;
+  @include pc{
+    font: 15px/24px sans-serif;
+    box-sizing: border-box;
+    width: 50%;
+    letter-spacing: 1px;
+    padding-left: 4em;
+  }
+  @include sp {
+    padding-left: 1em;
+    margin-left: 20px;
+  }
+	
 }
 .cp_iptxt input[type='textbox']:focus {
 	outline: none;
 }
-.ef {
-	padding: 4px 0;
+input{
+  padding: 4px 0;
 	border: 0;
 	border-bottom: 1px solid #1b2538;
 	background-color: transparent;
+  transition: 3s;
+  :focus{
+    border-bottom: 1px solid #0B9BF5;
+    outline: 0;
+  }
 }
+// .ef {
+	
+// }
 .ef ~ .focus_line {
-	position: absolute;
-	bottom: 0;
-	left: 27%;
-	width: 0;
-	height: 2px;
-	transition: 0.4s;
-	background-color: #da3c41;
+  @include pc{
+    position: absolute;
+    bottom: 0;
+    left: 27%;
+    width: 0;
+    height: 2px;
+    transition: 0.4s;
+    // background-color: #da3c41;
+  }
+  @include sp {
+    left: 34%;
+  }
+	
 }
 .ef:focus ~ .focus_line,
 .cp_iptxt.ef ~ .focus_line {
@@ -426,7 +716,179 @@ a{
 	color: #da3c41;
 }
 
-.article{
-  position: absolute;
-  right: 30px;
+.articles{
+  @include pc{
+    margin: 0 0 200px 0;
+    width: 80%;
+    ul{
+      display: flex;
+      flex-wrap: wrap;
+
+      li{
+        list-style: none;
+        font-size: 20px;
+        width: 43%;
+        padding: 80px 0px 30px 0px;
+        margin: 30px 30px;
+        background: #fff;
+        text-align: center;
+        box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
+        border: 5px solid #f0f0f0;
+        
+        &.article{
+          opacity: 0;
+          transform: translateY(50px);
+          &.show{
+            opacity:1;
+            transition: .3s;
+            transform: none;
+          }
+            .image-scale{
+              overflow: hidden;
+              width: 80%;
+              margin: 0 auto;
+              transition: .7s ease;
+              height: auto;
+              img{
+                height: 100%;
+                width: 100%;
+                display: block;
+              }
+          }
+        }
+        .image{
+          transition: .5s;
+          overflow: hidden;
+          &:hover{
+            transform: scale(1.1,1.1);
+            // transition:1s all;
+          }
+        }
+        
+      }
+    }
+    
+    p{
+      margin-top: 50px;
+      border:1px solid #000;
+      margin: 15% 10% 5% 10%;
+    }
+  }
+
+  @include sp{
+    width: 100%;
+    ul{
+      padding: 0;
+    }
+    
+    .article{
+      width: 100%;
+      font-size: 16px;
+
+    }
+    
+  }
+  
+}
+
+.indiv{
+  @include pc{
+    ul{
+      li{
+        list-style: none;
+        .article-top{
+          box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
+          border-radius: .5rem;
+          position: relative;
+          background: white;
+          width: 20%;
+          height: 300px;
+          padding: 30px;
+          margin: 100px;
+          
+
+          h2{
+            margin-top: 30px;
+          }
+          h6{
+            margin-top: 30px;
+            font-size: 15px;
+          }
+          h4{
+            margin: 5% 0 0 80%;
+          }
+          .article-deco{
+            position: absolute;
+            top: 0;
+            right: 10%;
+            width: 10px;
+            height: 30%;
+          }
+        }
+  
+        .article-content{
+          box-shadow: 50px 30px 50px 3px rgba(0,0,0,0.4);
+          padding: 50px;
+          border-radius: .5rem;
+          background: white;
+          margin: 100px 300px;
+          width: 50%;
+          height: 500px;
+          text-align: center;
+          h1{
+            padding-top: 60px;
+          }
+          p{
+            margin-top: 5%;
+          }
+        }
+      }
+    }
+  }
+  @include sp{
+    ul{
+      padding: 0;
+      li{
+        .article-top{
+          margin: 10%;
+          width: 80%;
+          height: auto;
+        }
+
+        .article-content{
+          margin: 100px 5%;
+          width: 90%;
+          padding:0 0 30px 0;
+          height: auto;
+          h1{
+            font-size: 1rem;
+            padding: 30px 10px;
+          }
+          p{
+            padding: 0 30px;
+          }
+        }
+      }
+    }
+  }
+
+  .others{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 350px;
+    li{
+      width: auto;
+      
+      .article-top{
+        margin: 30px;
+        width: auto;
+        margin-bottom: 200px;
+      }
+    }
+  }
+}
+
+#suggestion{
+  text-align: center;
+  text-shadow: 10px 10px 10px rgba(0,0,0,0.4);
 }

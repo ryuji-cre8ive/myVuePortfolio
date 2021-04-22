@@ -7,7 +7,7 @@
           <div class="text">
             <h1>Worried Sheep</h1>
             <p>
-              Express製のお悩み相談WebApp。DBは使用していないものの、ルーティングやAPIの使用(これではZoomのAPIを使用)。フロントではgsapやjQueryを使用。ちょっとしたアニメーションの付与に役に立った。magicScrollというライブラリが一番の衝撃。
+              Express製のお悩み相談WebApp。ルーティングやAPIの使用(これではZoomのAPIを使用)。フロントではgsapやjQueryを使用。ちょっとしたアニメーションの付与に役に立った。
               ホスティングにはGlitchというサービスを使用しているが、無料のため如何せん立ち上がりが遅い。一見するとお絵描きAppに見える可能性が微レ存。
             </p>
           </div>

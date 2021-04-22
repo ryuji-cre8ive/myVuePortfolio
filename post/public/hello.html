@@ -7,9 +7,22 @@
   <title>Document</title>
 </head>
 <body>
-  <form action="/post" method="post">
-    <input type="text" name="name">
+  <form action="/data" method="post">
+    <p>Register your documents</p>
+    <input type="text" name="title" placeholder="title">
+    <input type="text" name="titleEng" placeholder="titleEng">
+    <input type="text" name="category" placeholder="category">
+    <input type="text" name="content" placeholder="content">
     <button type="submit">send</button>
+  </form>
+  <form action="/deleteAll" method="post">
+    <p>delete document</p>
+    <button type="submit">Alldelete</button>
+  </form>
+  <form action="/delete" method="post">
+    <p>delete document</p>
+    <input type="id" name="id">
+    <button type="submit">Alldelete</button>
   </form>
 </body>
 </html>

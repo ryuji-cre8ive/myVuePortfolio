@@ -1,6 +1,6 @@
 <template>
   <div class="contact">
-    <h1>Get in touch with me</h1>
+    <h1 class="get-in-touch">Get in touch with me</h1>
     <form @submit.prevent class="forms">
       <div>
         <div class="cp_iptxt">
@@ -38,6 +38,9 @@ export default {
       text: ""
     }
   },
+  mounted(){
+    setTimeout(() => { this.textMovement() }, 400);
+  },
   methods: {
     submit: async function () {
       let postName = this.name;
@@ -59,6 +62,16 @@ export default {
       this.name = "";
       this.mail = "";
       this.text = "";
+    },
+    textMovement:() => {
+      const textElement = document.querySelectorAll('.get-in-touch');
+      for (let index = 0; index < textElement.length; index++) {
+        const target = textElement[index];
+        const texts = target.textContent;
+        const textsArray = [];
+
+        // target = 
+      }
     }
   }
   // async asyncData(context) {

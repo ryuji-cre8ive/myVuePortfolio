@@ -1,5 +1,6 @@
 
 export default {
+  mode: 'universal',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'nuxt-portfolio',
@@ -8,23 +9,23 @@ export default {
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1' },
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
+  script: [
+    {src: '~/static/index.js', lang: 'js'}
+  ],
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     {src: '~/assets/main.scss', lang: "scss"}
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '~/plugins/scroll.js'
-  ],
+  
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -37,6 +38,10 @@ export default {
       {
         set: '@fortawesome/free-brands-svg-icons',
         icons: ['fab']
+      },
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
       }
     ]
   },
@@ -46,11 +51,12 @@ export default {
   modules: [
     "@nuxtjs/axios",
     'nuxt-fontawesome',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ['gsap']
   },
   axios: {
     prefix: "/post",
@@ -68,9 +74,7 @@ export default {
         '^/data': '/'
       }}
   },
-  loading: { color: '#FF8733' },
-
-  
+  // loading: '~/components/loading.vue'
 }
 
 

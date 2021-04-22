@@ -7,7 +7,7 @@
           <div class="text">
             <h1>Smart Post for CCC</h1>
             <p>
-              Code For Japanが主催するCivictech Challenge Cup2020の紹介サイトを作成した。初めてのチーム開発でもあったため、コミュニケーションに一苦労。だが、デザイナーが目指すものを作れた。
+              Code For Japanが主催するCivictech Challenge Cup2020の紹介サイトのフロントエンドを担当し制作した。初めてのオンラインでのチーム開発でもあったため、コミュニケーションに一苦労。だが、デザイナーのお墨付きをいただけた。
             </p>
           </div>
           <button @click="$emit('closeModal')">

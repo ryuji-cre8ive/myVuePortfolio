@@ -1,6 +1,7 @@
 <template>
   <div>
     <nav-bar id="nav" />
+    <sp-menu />
     <transition name="fade-menu" mode="out-in">
       <top-menu class="menu" />
     </transition>
