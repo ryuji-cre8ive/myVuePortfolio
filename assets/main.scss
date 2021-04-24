@@ -873,17 +873,33 @@ input{
   }
 
   .others{
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: 350px;
-    li{
-      width: auto;
-      
-      .article-top{
-        margin: 30px;
+    @include pc{
+      display: flex;
+      flex-wrap: wrap;
+      margin-right: 350px;
+      li{
         width: auto;
-        margin-bottom: 200px;
+        
+        .article-top{
+          margin: 30px;
+          width: auto;
+          margin-bottom: 200px;
+        }
       }
+    }
+
+    @include sp{
+      margin-right: 0;
+      li{
+        .article-top{
+          margin: 30px;
+          width: 80%;
+          height: auto;
+          margin-bottom: 20px;
+        }
+      }
+      
+      
     }
   }
 }
