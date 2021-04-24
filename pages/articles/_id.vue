@@ -54,8 +54,8 @@ export default {
     }
   },
   async fetch(){
-    await axios.get('http://localhost:8080/data/' + this.id).then(res => this.post = res.data)
-    await axios.get('http://localhost:8080/category/' + this.id).then(res => this.otherArticle = res.data)
+    await axios.get('http://localhost:5000/data/' + this.id).then(res => this.post = res.data)
+    await axios.get('http://localhost:5000/category/' + this.id).then(res => this.otherArticle = res.data)
   },
   mounted(){
     console.log(this.post);
