@@ -1,1 +1,1 @@
-web: nuxt
+web: node ./post/index.js
