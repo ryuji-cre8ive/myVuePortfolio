@@ -64,12 +64,12 @@ export default {
   },
   proxy: {
     '/post': {
-      target: 'http://localhost:8080',
+      target: 'https://stormy-hollows-34938.herokuapp.com/',
       pathRewrite: {
         '^/post': '/'
       }},
     '/data': {
-      target: 'http://localhost:8080',
+      target: 'https://stormy-hollows-34938.herokuapp.com/',
       pathRewrite: {
         '^/data': '/'
       }}
