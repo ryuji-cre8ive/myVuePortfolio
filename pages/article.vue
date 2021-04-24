@@ -40,9 +40,9 @@ export default {
       const target = document.querySelectorAll('.article')
       document.addEventListener('scroll', () => {
         for (let index = 0; index < target.length; index++) {
-          const getElementDistance = target[index].getBoundingClientRect().top + target[index].clientHeight * 0.6;
+          const getElementDistance = target[index].getBoundingClientRect().top + target[index].clientHeight * 0.8;
           if (window.innerHeight > getElementDistance) {
-            target[index].classList.add('show')
+            target[index].classList.add('show');
           }
         }
       });
