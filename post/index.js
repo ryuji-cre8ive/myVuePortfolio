@@ -19,7 +19,7 @@ const db = new Datastore({
 
 db.loadDatabase();
 
-const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN.toString();
+const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
 const messageChannel = process.env.MSGCHANNEL.toString();
 
 const Botton = new WebClient(SLACK_BOT_TOKEN);
