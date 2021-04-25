@@ -29,7 +29,7 @@ export default {
     setTimeout(() => {
       this.scrolling();
     }, 400)
-    await axios.get('https://stormy-hollows-34938.herokuapp.com/data').then(res => this.posts = res.data)
+    await axios.get('/api/data').then(res => this.posts = res.data)
     const photos = await axios.get(`https://pixabay.com/api/?key=16555952-bfac78937775f2c69b8b73d71&image_type=photo&category=business`).then(res => this.image = res.data.hits)
     for(let i = 0; i < this.posts.length; i++){
       this.posts[i].image = photos[i].webformatURL

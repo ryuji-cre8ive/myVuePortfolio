@@ -7,7 +7,7 @@
   <title>Document</title>
 </head>
 <body>
-  <form action="/data" method="post">
+  <form action="api/data" method="post">
     <p>Register your documents</p>
     <input type="text" name="title" placeholder="title">
     <input type="text" name="titleEng" placeholder="titleEng">
@@ -15,11 +15,11 @@
     <input type="text" name="content" placeholder="content">
     <button type="submit">send</button>
   </form>
-  <form action="/deleteAll" method="post">
+  <form action="api/deleteAll" method="post">
     <p>delete document</p>
     <button type="submit">Alldelete</button>
   </form>
-  <form action="/delete" method="post">
+  <form action="api/delete" method="post">
     <p>delete document</p>
     <input type="id" name="id">
     <button type="submit">Alldelete</button>

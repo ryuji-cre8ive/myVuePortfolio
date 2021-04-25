@@ -7,7 +7,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "server": "node ./post/index.js"
+    "server": "node ./api/index.js",
+    "glitch": "nuxt --port 5000"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
@@ -18,6 +19,7 @@
     "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
+    "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -31,6 +33,7 @@
     "nuxt-fontawesome": "^0.4.0",
     "querystring": "^0.2.1",
     "sass-loader": "^10.1.1",
+    "serve-static": "^1.14.1",
     "vue-scrollmagic": "^1.2.0"
   },
   "devDependencies": {

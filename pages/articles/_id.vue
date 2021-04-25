@@ -54,8 +54,8 @@ export default {
     }
   },
   async fetch(){
-    await axios.get('https://stormy-hollows-34938.herokuapp.com/data/' + this.id).then(res => this.post = res.data)
-    await axios.get('https://stormy-hollows-34938.herokuapp.com/' + this.id).then(res => this.otherArticle = res.data)
+    await axios.get('/api/data/' + this.id).then(res => this.post = res.data)
+    await axios.get('/api/category/' + this.id).then(res => this.otherArticle = res.data)
   },
   mounted(){
     console.log(this.post);

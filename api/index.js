@@ -13,6 +13,11 @@ const { contentSecurityPolicy } = require('helmet');
 // const { resolve } = require('core-js/fn/promise');
 // const { reject } = require('core-js/fn/promise');
 
+module.exports = { path: '/api', handler: app }
+// app.listen(5000, () => {
+//   console.log('server is listening on 5000')
+// })
+
 const db = new Datastore({
   filename: "articles.db"
 });
@@ -32,14 +37,31 @@ const sendToSlack = (ch, msg) => {
 }
 
 // app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('public'));
+app.use(express.static('dist'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'", 'https://xn--nuxt-e83cxa9hqa9c6rscykta5nnfyi7b2tjevpka'],
+    },
+  })
+);
+app.use(helmet.dnsPrefetchControl());
+app.use(helmet.expectCt());
+app.use(helmet.frameguard());
+app.use(helmet.hidePoweredBy());
+// app.use(helmet.hsts()); // use reverse proxy with ssl
+app.use(helmet.ieNoOpen());
+app.use(helmet.noSniff());
+app.use(helmet.permittedCrossDomainPolicies());
+app.use(helmet.referrerPolicy());
+app.use(helmet.xssFilter());
+
 app.use(cors());
 
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/hello.html');
   // const count = await db.count({ }, (err, docs) => {
   //   console.log('count',docs);
@@ -47,6 +69,10 @@ app.get('/', async (req, res) => {
   // });
   
 });
+
+app.get('/hello', (req, res) => {
+  res.send('Hi')
+})
 
 app.post('/post', (req, res) => {
   console.log(req.body);
@@ -136,11 +162,11 @@ app.post('/delete', (req, res) => {
 // app.get('/delete', (req, res) => {
 //   res.redirect('/');
 // })
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log('server is listening on' + PORT);
-});
+// app.listen(PORT, () => {
+//   console.log('server is listening on' + PORT);
+// });
 
 const deleteDatabase = () => {
   db.remove({}, {multi: true}, (err, runRemove) => {

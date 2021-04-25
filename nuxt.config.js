@@ -1,5 +1,5 @@
 
-export default {
+module.exports = {
   mode: 'universal',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -45,7 +45,8 @@ export default {
       }
     ]
   },
- 
+  dev: process.env.NODE_ENV !== 'production',
+  serverMiddleware: ['~/api/index.js'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -74,6 +75,8 @@ export default {
         '^/data': '/'
       }}
   },
+
+  // serverMiddleware: ['~/post/index.js'],
   // loading: '~/components/loading.vue'
 }
 
