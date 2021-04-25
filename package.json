@@ -8,7 +8,8 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "server": "node ./api/index.js",
-    "glitch": "nuxt --port 5000"
+    "glitch": "nuxt --port 5000",
+    "deploy": "git add . && git commit -m 'Improve' && git push"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
