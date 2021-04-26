@@ -49,7 +49,7 @@ export default {
       let postMail = this.mail;
       let postText = this.text;
       if (postName && postMail && postText) {
-        axios.post('/api/data', {
+        axios.post('/api/post', {
           name: postName,
           mail: postMail,
           text: postText
