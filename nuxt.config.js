@@ -52,30 +52,13 @@ module.exports = {
   modules: [
     "@nuxtjs/axios",
     'nuxt-fontawesome',
-    '@nuxtjs/proxy',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['gsap']
   },
-  axios: {
-    prefix: "/post",
-    prefix: "/data"
-  },
-  proxy: {
-    '/post': {
-      target: 'https://stormy-hollows-34938.herokuapp.com/',
-      pathRewrite: {
-        '^/post': '/'
-      }},
-    '/data': {
-      target: 'https://stormy-hollows-34938.herokuapp.com/',
-      pathRewrite: {
-        '^/data': '/'
-      }}
-  },
-
+  
   // serverMiddleware: ['~/post/index.js'],
   // loading: '~/components/loading.vue'
 }

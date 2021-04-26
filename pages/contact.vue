@@ -30,7 +30,9 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
+  
   data(){
     return{
       name: "",
@@ -47,7 +49,7 @@ export default {
       let postMail = this.mail;
       let postText = this.text;
       if (postName && postMail && postText) {
-        this.$axios.$post('/post', {
+        axios.post('/api/post', {
           name: postName,
           mail: postMail,
           text: postText
