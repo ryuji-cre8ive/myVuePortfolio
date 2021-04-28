@@ -718,7 +718,7 @@ input{
 
 .articles{
   @include pc{
-    margin: 0 0 200px 0;
+    margin: 100px 0 200px 0;
     width: 80%;
     ul{
       display: flex;
@@ -764,7 +764,6 @@ input{
             // transition:1s all;
           }
         }
-        
       }
     }
     
