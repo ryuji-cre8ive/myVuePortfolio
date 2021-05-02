@@ -19,7 +19,8 @@ module.exports = { path: '/api', handler: app }
 // })
 
 const db = new Datastore({
-  filename: "articles.db"
+  filename: "articles.db",
+  autoload: true
 });
 
 db.loadDatabase();
@@ -62,13 +63,19 @@ app.use(cors());
 
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/hello.html');
-  // const count = await db.count({ }, (err, docs) => {
-  //   console.log('count',docs);
-  //   return docs;
-  // });
-  
+  res.sendFile(__dirname + '/public/login.html');
 });
+
+app.post('/admin', (req, res) => {
+  const name = req.body.name;
+  const password = req.body.password;
+
+  if (name === "admin" && password === "gegege") {
+    res.sendFile(__dirname + '/public/hello.html');
+    return
+  }
+  res.redirect('/');
+})
 
 app.get('/hello', (req, res) => {
   res.send('Hi')

@@ -13,7 +13,11 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
+    "@fortawesome/free-brands-svg-icons": "^5.15.2",
+    "@fortawesome/free-regular-svg-icons": "^5.15.2",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/vue-fontawesome": "^2.0.2",
+    "@nuxtjs/fontawesome": "^1.1.2",
     "@slack/web-api": "^6.1.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
@@ -26,15 +30,10 @@
     "node-sass": "^5.0.0",
     "nuxt": "^2.14.12",
     "nuxt-fontawesome": "^0.4.0",
+    "prompt": "^1.1.0",
     "querystring": "^0.2.1",
     "sass-loader": "^10.1.1",
-    "serve-static": "^1.14.1",
-    "@fortawesome/free-brands-svg-icons": "^5.15.2",
-    "@fortawesome/free-regular-svg-icons": "^5.15.2",
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "@nuxtjs/fontawesome": "^1.1.2"
+    "serve-static": "^1.14.1"
   },
-  "devDependencies": {
-    
-  }
+  "devDependencies": {}
 }
