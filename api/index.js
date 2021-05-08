@@ -26,10 +26,10 @@ const db = new Datastore({
 db.loadDatabase();
 
 const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: "nuxt_portfolio_db"
+  host: 'us-cdbr-east-03.cleardb.com',
+  user: 'b85ae779ab423c',
+  password: 'c8465475',
+  database: "heroku_a10312e351ea50a"
 });
 
 con.connect((err) => {
