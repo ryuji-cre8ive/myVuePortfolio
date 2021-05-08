@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="menu_">
-      <li v-for="link in links" :key="link">
+      <li v-for="link in links" :key="link.url">
         <nuxt-link :to="link.url">{{link.text}}</nuxt-link>
       </li>
     </ul>

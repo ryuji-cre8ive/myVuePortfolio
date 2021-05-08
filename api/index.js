@@ -12,7 +12,7 @@ const axios = require('axios');
 const { contentSecurityPolicy } = require('helmet');
 // const { resolve } = require('core-js/fn/promise');
 // const { reject } = require('core-js/fn/promise');
-
+const mysql = require('mysql');
 module.exports = { path: '/api', handler: app }
 // app.listen(5000, () => {
 //   console.log('server is listening on 5000')
@@ -24,6 +24,19 @@ const db = new Datastore({
 });
 
 db.loadDatabase();
+
+const con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: "nuxt_portfolio_db"
+});
+
+con.connect((err) => {
+  if (err) throw err;
+  console.log('connected!')
+});
+
 
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
 const messageChannel = process.env.MSGCHANNEL;
@@ -66,16 +79,29 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/login.html');
 });
 
-app.post('/admin', (req, res) => {
-  const name = req.body.name;
-  const password = req.body.password;
-
-  if (name === "admin" && password === "gegege") {
-    res.sendFile(__dirname + '/public/hello.html');
-    return
-  }
-  res.redirect('/');
+app.post('/check', (req, res) => {
+  const sql = 'SELECT * FROM users WHERE id=1';
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
 })
+
+// app.post('/admin', (req, res) => {
+//   const name = req.body.name;
+//   const password = req.body.password;
+
+//   if (name === "admin" && password === "gegege") {
+//     res.sendFile(__dirname + '/public/hello.html');
+//     return
+//   }
+//   res.redirect('/');
+// });
+
+// app.get('/admin', (req, res) => {
+//   res.sendFile(__dirname + '/public/hello.html');
+//   return
+// })
 
 app.get('/hello', (req, res) => {
   res.send('Hi')
@@ -105,12 +131,7 @@ app.post('/data', (req, res) => {
   const date = new Date();
 
   insertToDatabase(title, content, titleEng, category, date);
-
-  db.find({}, (err, docs) => {
-    console.log(docs);
-  });
-
-  res.redirect('/');
+  res.send('successfully inserted!');
 });
 
 app.get('/data/:index', (req, res) => {
@@ -155,15 +176,15 @@ app.post('/deleteAll', (req, res) => {
 });
 
 app.post('/delete', (req, res) => {
-  const deleteId = req.body.id;
+  const deleteId = req.body._id;
+  console.log(deleteId);
   db.remove({_id: deleteId}, {}, (err, docs) => {
     if (err) {
       res.send('error');
       return
     }
   })
-  res.send('Your action is accepted');
-    // res.redirect('/');
+  // res.send('Your action is accepted');
 });
 
 // app.get('/delete', (req, res) => {
@@ -174,6 +195,39 @@ app.post('/delete', (req, res) => {
 // app.listen(PORT, () => {
 //   console.log('server is listening on' + PORT);
 // });
+
+app.post('/update', (req, res) => {
+  const id = req.body._id;
+  const content = req.body.content;
+  const title = req.body.title;
+
+  db.findOne({_id: id}, (err, docs) => {
+    if (err) {
+      res.send(err)
+      return
+    }
+    if (docs) {
+      let update = {
+        _id: docs._id,
+        content: content,
+        title: title,
+        category: docs.category,
+        date: docs.date,
+        image: docs.image,
+        titleEng: docs.titleEng
+      }
+      db.update({_id: docs._id}, update, (err, numOfDocs) => {
+        if (err) {
+          res.send(err);
+          return
+        }
+        if(numOfDocs) {
+          console.log('success');
+        }
+      })
+    }
+  })
+})
 
 const deleteDatabase = () => {
   db.remove({}, {multi: true}, (err, runRemove) => {
