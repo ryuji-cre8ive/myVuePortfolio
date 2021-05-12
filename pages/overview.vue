@@ -46,9 +46,7 @@ export default {
   },
 
   async mounted(){
-    setInterval(async() => {
-      await axios.get('/api/data').then(res => this.articles = res.data)
-    }, 300);
+    await axios.get('/api/newpost').then(res => this.articles = res.data)
     
   },
   computed: {
@@ -70,6 +68,7 @@ export default {
       this.titleEng = "";
       this.category = "";
       this.content = "";
+      axios.get('/api/data').then(res => this.articles = res.data);
     },
     deleteArticle(id){
       let data = {
@@ -82,6 +81,7 @@ export default {
         axios.post('/api/delete', data).then(res => console.log(res));
         this.$nextTick(() => {
         console.log('deleted!');
+        axios.get('/api/data').then(res => this.articles = res.data)
       });
       } else {
         return

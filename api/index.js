@@ -10,13 +10,9 @@ const cors = require('cors');
 const Datastore = require('nedb');
 const axios = require('axios');
 const { contentSecurityPolicy } = require('helmet');
-// const { resolve } = require('core-js/fn/promise');
-// const { reject } = require('core-js/fn/promise');
 const mysql = require('mysql');
 module.exports = { path: '/api', handler: app }
-// app.listen(5000, () => {
-//   console.log('server is listening on 5000')
-// })
+
 
 const db = new Datastore({
   filename: "articles.db",
@@ -25,16 +21,19 @@ const db = new Datastore({
 
 db.loadDatabase();
 
-const con = mysql.createConnection({
+const mysql_config = {
   host: 'us-cdbr-east-03.cleardb.com',
   user: 'b85ae779ab423c',
   password: 'c8465475',
   database: "heroku_a10312e351ea50a"
-});
+}
+
+
+const con = mysql.createConnection(mysql_config);
 
 con.connect((err) => {
   if (err) throw err;
-  console.log('connected!')
+  console.log("connected!")
 });
 
 
@@ -75,41 +74,21 @@ app.use(helmet.xssFilter());
 app.use(cors());
 
 
-// app.get('/', (req, res) => {
-//   const sql = 'SELECT * FROM admin WHERE id=1';
-//   con.query(sql, (err, result) => {
-//     if (err) throw err;
-//     res.send(result);
-//   });
-// });
-
 app.post('/check', (req, res) => {
   const sql = 'SELECT * FROM admin WHERE id=1';
-  con.query(sql, (err, result) => {
+  con.query(sql, async(err, result) => {
+    if (err) throw err;
+    await res.send(result);
+  });
+});
+
+app.get('/newpost', (req, res) => {
+  const sql = "SELECT * FROM articles";
+  con.query(sql, async (err, result) => {
     if (err) throw err;
     res.send(result);
-  });
-})
-
-// app.post('/admin', (req, res) => {
-//   const name = req.body.name;
-//   const password = req.body.password;
-
-//   if (name === "admin" && password === "gegege") {
-//     res.sendFile(__dirname + '/public/hello.html');
-//     return
-//   }
-//   res.redirect('/');
-// });
-
-// app.get('/admin', (req, res) => {
-//   res.sendFile(__dirname + '/public/hello.html');
-//   return
-// })
-
-app.get('/hello', (req, res) => {
-  res.send('Hi')
-})
+  })
+});
 
 app.post('/post', (req, res) => {
   console.log(req.body);
@@ -126,6 +105,7 @@ app.get('/data', (req, res) => {
     res.send(docs);
   });
 });
+
 
 app.post('/data', (req, res) => {
   const title = req.body.title;
@@ -144,14 +124,11 @@ app.get('/data/:index', (req, res) => {
       res.status(500).json(err);
       return
     }
-
     if(docs) {
       res.send(docs);
       return
     }
-
     res.status(404).json({err: 404})
-    console.log(docs)
   })
 });
 
@@ -191,14 +168,6 @@ app.post('/delete', (req, res) => {
   // res.send('Your action is accepted');
 });
 
-// app.get('/delete', (req, res) => {
-//   res.redirect('/');
-// })
-// const PORT = process.env.PORT || 5000;
-
-// app.listen(PORT, () => {
-//   console.log('server is listening on' + PORT);
-// });
 
 app.post('/update', (req, res) => {
   const id = req.body._id;
@@ -241,16 +210,7 @@ const deleteDatabase = () => {
 
 
 const insertToDatabase = async (title, content, titleEng, category, date) => {
-  // const getDocs = () => {
-  //   return new Promise((resolve, reject) => {
-  //     db.find({}, (err, docs) => {
-  //       if (err) reject(err);
-  //       if(docs) resolve(docs);
-  //     })
-  //   })
-  // }
-
-  // const docs = await getDocs();
+  
   const dbDate = new Date().toString();
   let compDate = dbDate.split(' ');
   let day = compDate[2];
