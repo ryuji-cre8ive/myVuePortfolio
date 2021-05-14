@@ -22,10 +22,10 @@ export default {
     }
   },
   mounted(){
-    axios.get('/api/data/' + this.id).then(res => {
+    axios.get('/api/newpost/' + this.id).then(res => {
       this.article = res.data[0];
       this.newTitle = res.data[0].title;
-      this.newContent = res.data[0].content
+      this.newContent = res.data[0].content;
     })
   },
 

@@ -9,11 +9,11 @@
         <th>削除ボタン</th>
         <th>編集ボタン</th>
       </tr>
-      <tr v-for="article in articles" :key="article._id">
+      <tr v-for="article in articles" :key="article.id">
         <td >{{article.title}}</td>
         <td>
-          <button v-on:click="deleteArticle(article._id)">削除</button>
-          <nuxt-link :to="`/edit/${article._id}`">編集</nuxt-link>
+          <button v-on:click="deleteArticle(article.id)">削除</button>
+          <nuxt-link :to="`/edit/${article.id}`">編集</nuxt-link>
         </td>
       </tr>
     </table>
@@ -63,12 +63,12 @@ export default {
         category: this.category,
         content: this.content
       };
-      axios.post('/api/data', data).then(res => console.log(res));
+      axios.post('/api/create', data).then(res => console.log(res));
       this.title = "";
       this.titleEng = "";
       this.category = "";
       this.content = "";
-      axios.get('/api/data').then(res => this.articles = res.data);
+      axios.get('/api/newpost').then(res => this.articles = res.data);
     },
     deleteArticle(id){
       let data = {

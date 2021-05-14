@@ -11,6 +11,7 @@ const Datastore = require('nedb');
 const axios = require('axios');
 const { contentSecurityPolicy } = require('helmet');
 const mysql = require('mysql');
+const uuid = require('node-uuid');
 module.exports = { path: '/api', handler: app }
 
 
@@ -29,12 +30,30 @@ const mysql_config = {
 }
 
 
-const con = mysql.createConnection(mysql_config);
+var con;
 
-con.connect((err) => {
-  if (err) throw err;
-  console.log("connected!")
-});
+function handleDisconnect(){
+  con = mysql.createConnection(mysql_config);
+  con.connect((err) => {
+    if (err) {
+      console.error('Error has occured in connection: ', err);
+      setTimeout(() => {
+        handleDisconnect();
+      }, 2000);
+    }
+  });
+  con.on('error', (err) => {
+    console.error("DB error has occured: ", err);
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  })
+}
+
+
+handleDisconnect()
 
 
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
@@ -90,6 +109,42 @@ app.get('/newpost', (req, res) => {
   })
 });
 
+app.get('/newpost/:id', (req, res) => {
+  const sql = `SELECT * FROM articles WHERE id =${req.params.id}`;
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+});
+
+app.post('/create', (req, res) => {
+  const id = uuid.v4().split('-').join(' ');
+  const title = req.body.title;
+  const titleEng = req.body.titleEng;
+  const category = req.body.category;
+  const content = req.body.content;
+  createNewArticle(id, title, titleEng, category, content).then(() => console.log('success!'))
+});
+
+const createNewArticle = (id, title, titleEng, category, content) => {
+  let img = "";
+  const dbDate = new Date().toString();
+  let compDate = dbDate.split(' ');
+  let day = compDate[2];
+  let month = compDate[1];
+  let year = compDate[3];
+  let time = compDate[4];
+  let dateArr = [];
+  dateArr.push(year, month, day, time);
+  const lastDate = dateArr.join(' ');
+  const sql = 'INSERT INTO articles(id, title, titleEng, category, img, date, content) VALUES(?, ?, ?, ?, ?, ?, ?)';
+  con.query(sql, [id, title, titleEng, category,img, lastDate, content],(err, result) => {
+    if (err) throw err;
+    console.log(result);
+  })
+}
+
+
 app.post('/post', (req, res) => {
   console.log(req.body);
   let name = req.body.name;
@@ -105,7 +160,7 @@ app.get('/data', (req, res) => {
     res.send(docs);
   });
 });
-
+//below is old one
 
 app.post('/data', (req, res) => {
   const title = req.body.title;
