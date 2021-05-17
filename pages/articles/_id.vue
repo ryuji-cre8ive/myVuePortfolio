@@ -23,7 +23,7 @@
     <p id="suggestion">同じカテゴリの記事はこちら</p>
     <ul class="others">
     <li v-for="other in otherArticle" :key="other._id" >
-      <nuxt-link :to="`/articles/${other._id}`">
+      <nuxt-link :to="`/articles/${other.id}`">
         <div class="article-top">
         <div class="article-deco" :class="changeColor(other.category)"></div>
         <p>國分 竜二</p>
@@ -54,7 +54,7 @@ export default {
     }
   },
   async fetch(){
-    await axios.get('/api/data/' + this.id).then(res => this.post = res.data)
+    await axios.get('/api/newpost/' + this.id).then(res => this.post = res.data)
     await axios.get('/api/category/' + this.id).then(res => this.otherArticle = res.data)
   },
   mounted(){

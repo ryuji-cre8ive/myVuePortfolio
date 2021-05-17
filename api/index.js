@@ -28,32 +28,33 @@ const mysql_config = {
   password: 'c8465475',
   database: "heroku_a10312e351ea50a"
 }
+const conn = mysql.createConnection(mysql_config);
+const con = mysql.createPool(mysql_config);
+
+// var con;
+
+// function handleDisconnect(){
+//   con = mysql.createConnection(mysql_config);
+//   con.connect((err) => {
+//     if (err) {
+//       console.error('Error has occured in connection: ', err);
+//       setTimeout(() => {
+//         handleDisconnect();
+//       }, 2000);
+//     }
+//   });
+//   con.on('error', (err) => {
+//     console.error("DB error has occured: ", err);
+//     if (err.code === "PROTOCOL_CONNECTION_LOST") {
+//       handleDisconnect();
+//     } else {
+//       throw err;
+//     }
+//   })
+// }
 
 
-var con;
-
-function handleDisconnect(){
-  con = mysql.createConnection(mysql_config);
-  con.connect((err) => {
-    if (err) {
-      console.error('Error has occured in connection: ', err);
-      setTimeout(() => {
-        handleDisconnect();
-      }, 2000);
-    }
-  });
-  con.on('error', (err) => {
-    console.error("DB error has occured: ", err);
-    if (err.code === "PROTOCOL_CONNECTION_LOST") {
-      handleDisconnect();
-    } else {
-      throw err;
-    }
-  })
-}
-
-
-handleDisconnect()
+// handleDisconnect()
 
 
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
@@ -110,7 +111,8 @@ app.get('/newpost', (req, res) => {
 });
 
 app.get('/newpost/:id', (req, res) => {
-  const sql = `SELECT * FROM articles WHERE id =${req.params.id}`;
+  const id = req.params.id;
+  const sql = `SELECT * FROM articles WHERE id="${id}"`;
   con.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -118,7 +120,7 @@ app.get('/newpost/:id', (req, res) => {
 });
 
 app.post('/create', (req, res) => {
-  const id = uuid.v4().split('-').join(' ');
+  const id = uuid.v4().split('-').join('');
   const title = req.body.title;
   const titleEng = req.body.titleEng;
   const category = req.body.category;
@@ -155,54 +157,42 @@ app.post('/post', (req, res) => {
   res.send('the data is totally accepted');
 });
 
-app.get('/data', (req, res) => {
-  db.find({}, (err, docs) => {
-    res.send(docs);
-  });
-});
-//below is old one
+// app.get('/data', (req, res) => {
+//   db.find({}, (err, docs) => {
+//     res.send(docs);
+//   });
+// });
+// //below is old one
 
-app.post('/data', (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-  const titleEng = req.body.titleEng;
-  const category = req.body.category;
-  const date = new Date();
+// app.post('/data', (req, res) => {
+//   const title = req.body.title;
+//   const content = req.body.content;
+//   const titleEng = req.body.titleEng;
+//   const category = req.body.category;
+//   const date = new Date();
 
-  insertToDatabase(title, content, titleEng, category, date);
-  res.send('successfully inserted!');
-});
+//   insertToDatabase(title, content, titleEng, category, date);
+//   res.send('successfully inserted!');
+// });
 
-app.get('/data/:index', (req, res) => {
-  db.find({_id: req.params.index}, (err, docs) => {
-    if (err) {
-      res.status(500).json(err);
-      return
-    }
-    if(docs) {
-      res.send(docs);
-      return
-    }
-    res.status(404).json({err: 404})
-  })
-});
+// app.get('/data/:index', (req, res) => {
+//   db.find({_id: req.params.index}, (err, docs) => {
+//     if (err) {
+//       res.status(500).json(err);
+//       return
+//     }
+//     if(docs) {
+//       res.send(docs);
+//       return
+//     }
+//     res.status(404).json({err: 404})
+//   })
+// });
 
 app.get('/category/:id', async(req, res) => {
   const id = await req.params.id;
-  console.log('arrived');
-  console.log(req.params.id);
-  db.findOne({_id: id}, (err, docs) => {
-    if (err) {
-      res.status(500).json(err)
-      return
-    }
-
-    if (docs) {
-      db.find({category: docs.category}, (err, docs) => {
-        res.send(docs)
-      });
-    }
-  })
+  
+  const sql = `SELECT * FROM articles WHERE category="${category}"`;
   
 })
 
@@ -212,49 +202,56 @@ app.post('/deleteAll', (req, res) => {
 });
 
 app.post('/delete', (req, res) => {
-  const deleteId = req.body._id;
+  const deleteId = req.body.id;
   console.log(deleteId);
-  db.remove({_id: deleteId}, {}, (err, docs) => {
-    if (err) {
-      res.send('error');
-      return
-    }
+  const sql = `DELETE FROM articles WHERE id="${deleteId}"`;
+
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
   })
-  // res.send('Your action is accepted');
+  
 });
 
 
 app.post('/update', (req, res) => {
-  const id = req.body._id;
+  const id = req.body.id;
   const content = req.body.content;
   const title = req.body.title;
+  console.log(title);
+  const sql = `UPDATE articles SET title="${title}", content="${content}" WHERE id="${id}"`;
 
-  db.findOne({_id: id}, (err, docs) => {
-    if (err) {
-      res.send(err)
-      return
-    }
-    if (docs) {
-      let update = {
-        _id: docs._id,
-        content: content,
-        title: title,
-        category: docs.category,
-        date: docs.date,
-        image: docs.image,
-        titleEng: docs.titleEng
-      }
-      db.update({_id: docs._id}, update, (err, numOfDocs) => {
-        if (err) {
-          res.send(err);
-          return
-        }
-        if(numOfDocs) {
-          console.log('success');
-        }
-      })
-    }
-  })
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+
+  // db.findOne({_id: id}, (err, docs) => {
+  //   if (err) {
+  //     res.send(err)
+  //     return
+  //   }
+  //   if (docs) {
+  //     let update = {
+  //       _id: docs._id,
+  //       content: content,
+  //       title: title,
+  //       category: docs.category,
+  //       date: docs.date,
+  //       image: docs.image,
+  //       titleEng: docs.titleEng
+  //     }
+  //     db.update({_id: docs._id}, update, (err, numOfDocs) => {
+  //       if (err) {
+  //         res.send(err);
+  //         return
+  //       }
+  //       if(numOfDocs) {
+  //         console.log('success');
+  //       }
+  //     })
+  //   }
+  // })
 })
 
 const deleteDatabase = () => {

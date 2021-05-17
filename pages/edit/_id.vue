@@ -32,11 +32,12 @@ export default {
   methods: {
     updateArticle(){
       let data = {
-        _id: this.id,
+        id: this.id,
         title: this.newTitle,
         content: this.newContent
       }
-      axios.post('/api/update', data);
+      axios.post('/api/update', data).then(res => console.log(res));
+      
       alert('Your action is success');
     }
   }
