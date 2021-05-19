@@ -22,7 +22,7 @@
   <div>
     <p id="suggestion">同じカテゴリの記事はこちら</p>
     <ul class="others">
-    <li v-for="other in otherArticle" :key="other._id" >
+    <li v-for="other in otherArticle" :key="other.id" >
       <nuxt-link :to="`/articles/${other.id}`">
         <div class="article-top">
         <div class="article-deco" :class="changeColor(other.category)"></div>

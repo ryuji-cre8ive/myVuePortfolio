@@ -12,6 +12,7 @@ const axios = require('axios');
 const { contentSecurityPolicy } = require('helmet');
 const mysql = require('mysql');
 const uuid = require('node-uuid');
+const { faCreativeCommonsSamplingPlus } = require('@fortawesome/free-brands-svg-icons');
 module.exports = { path: '/api', handler: app }
 
 
@@ -192,7 +193,17 @@ app.post('/post', (req, res) => {
 app.get('/category/:id', async(req, res) => {
   const id = await req.params.id;
   
-  const sql = `SELECT * FROM articles WHERE category="${category}"`;
+  const sql = `SELECT * FROM articles WHERE id="${id}"`;
+  con.query(sql, async(err, result) => {
+    if (err) throw err;
+    const category = result[0].category;
+    const sql = `SELECT * FROM articles WHERE category="${category}"`;
+    con.query(sql, (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    })
+
+  })
   
 })
 
