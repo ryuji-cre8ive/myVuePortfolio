@@ -1,7 +1,7 @@
 <template>
 <div class="indiv">
   <ul>
-    <li v-for="article in post" :key="article._id">
+    <li v-for="article in post" :key="article.id">
       <div class="article-top">
         <div class="article-deco" :class="changeColor(article.category)"></div>
         <p>國分 竜二</p>
@@ -19,7 +19,7 @@
   </ul>
 
   
-  <div>
+  <!-- <div>
     <p id="suggestion">同じカテゴリの記事はこちら</p>
     <ul class="others">
     <li v-for="other in otherArticle" :key="other.id" >
@@ -37,12 +37,13 @@
       
     </li>
   </ul>
-  </div>
+  </div> -->
 </div>
 
 </template>
 
 <script>
+import { ConsoleLogger } from '@slack/logger';
 import axios from 'axios';
 
 export default {
@@ -54,8 +55,9 @@ export default {
     }
   },
   async fetch(){
-    await axios.get('/api/newpost/' + this.id).then(res => this.post = res.data)
-    await axios.get('/api/category/' + this.id).then(res => this.otherArticle = res.data)
+    console.log(this.id)
+    await axios.get('/api/data/' + this.id).then(res => this.post = res.data)
+    // await axios.get('/api/category/' + this.id).then(res => this.otherArticle = res.data)
   },
   mounted(){
     console.log(this.post);

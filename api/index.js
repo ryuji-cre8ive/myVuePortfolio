@@ -95,74 +95,75 @@ app.use(helmet.xssFilter());
 app.use(cors());
 
 
-app.post('/check', (req, res) => {
-  const sql = 'SELECT * FROM admin WHERE id=1';
-  con.query(sql, async(err, result) => {
-    if (err) throw err;
-    await res.send(result);
-  });
-});
-
-app.get('/newpost', (req, res) => {
-  const sql = "SELECT * FROM articles";
-  con.query(sql, async (err, result) => {
-    if (err) throw err;
-    res.send(result);
-  })
-});
-
-app.get('/newpost/:id', (req, res) => {
-  const id = req.params.id;
-  const sql = `SELECT * FROM articles WHERE id="${id}"`;
-  con.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send(result);
-  })
-});
-
-app.post('/create', (req, res) => {
-  const id = uuid.v4().split('-').join('');
-  const title = req.body.title;
-  const titleEng = req.body.titleEng;
-  const category = req.body.category;
-  const content = req.body.content;
-  createNewArticle(id, title, titleEng, category, content).then(() => console.log('success!'))
-});
-
-const createNewArticle = (id, title, titleEng, category, content) => {
-  let img = "";
-  const dbDate = new Date().toString();
-  let compDate = dbDate.split(' ');
-  let day = compDate[2];
-  let month = compDate[1];
-  let year = compDate[3];
-  let time = compDate[4];
-  let dateArr = [];
-  dateArr.push(year, month, day, time);
-  const lastDate = dateArr.join(' ');
-  const sql = 'INSERT INTO articles(id, title, titleEng, category, img, date, content) VALUES(?, ?, ?, ?, ?, ?, ?)';
-  con.query(sql, [id, title, titleEng, category,img, lastDate, content],(err, result) => {
-    if (err) throw err;
-    console.log(result);
-  })
-}
-
-
-app.post('/post', (req, res) => {
-  console.log(req.body);
-  let name = req.body.name;
-  let mail = req.body.mail;
-  let text = req.body.text;
-  sendToSlack(messageChannel, `名前: ${name}\n e-mail: ${mail}\n 本文: ${text}\n `);
-
-  res.send('the data is totally accepted');
-});
-
-// app.get('/data', (req, res) => {
-//   db.find({}, (err, docs) => {
-//     res.send(docs);
+// app.post('/check', (req, res) => {
+//   const sql = 'SELECT * FROM admin WHERE id=1';
+//   con.query(sql, async(err, result) => {
+//     if (err) throw err;
+//     await res.send(result);
 //   });
 // });
+
+// app.get('/newpost', (req, res) => {
+//   console.log("I'm in new post")
+//   const sql = "SELECT * FROM articles";
+//   con.query(sql, async (err, result) => {
+//     if (err) throw err;
+//     res.send(result);
+//   })
+// });
+
+// app.get('/newpost/:id', (req, res) => {
+//   const id = req.params.id;
+//   const sql = `SELECT * FROM articles WHERE id="${id}"`;
+//   con.query(sql, (err, result) => {
+//     if (err) throw err;
+//     res.send(result);
+//   })
+// });
+
+// app.post('/create', (req, res) => {
+//   const id = uuid.v4().split('-').join('');
+//   const title = req.body.title;
+//   const titleEng = req.body.titleEng;
+//   const category = req.body.category;
+//   const content = req.body.content;
+//   createNewArticle(id, title, titleEng, category, content).then(() => console.log('success!'))
+// });
+
+// const createNewArticle = (id, title, titleEng, category, content) => {
+//   let img = "";
+//   const dbDate = new Date().toString();
+//   let compDate = dbDate.split(' ');
+//   let day = compDate[2];
+//   let month = compDate[1];
+//   let year = compDate[3];
+//   let time = compDate[4];
+//   let dateArr = [];
+//   dateArr.push(year, month, day, time);
+//   const lastDate = dateArr.join(' ');
+//   const sql = 'INSERT INTO articles(id, title, titleEng, category, img, date, content) VALUES(?, ?, ?, ?, ?, ?, ?)';
+//   con.query(sql, [id, title, titleEng, category,img, lastDate, content],(err, result) => {
+//     if (err) throw err;
+//     console.log(result);
+//   })
+// }
+
+
+// app.post('/post', (req, res) => {
+//   console.log(req.body);
+//   let name = req.body.name;
+//   let mail = req.body.mail;
+//   let text = req.body.text;
+//   sendToSlack(messageChannel, `名前: ${name}\n e-mail: ${mail}\n 本文: ${text}\n `);
+
+//   res.send('the data is totally accepted');
+// });
+
+app.get('/data', (req, res) => {
+  db.find({}, (err, docs) => {
+    res.send(docs);
+  });
+});
 // //below is old one
 
 // app.post('/data', (req, res) => {
@@ -176,66 +177,67 @@ app.post('/post', (req, res) => {
 //   res.send('successfully inserted!');
 // });
 
-// app.get('/data/:index', (req, res) => {
-//   db.find({_id: req.params.index}, (err, docs) => {
-//     if (err) {
-//       res.status(500).json(err);
-//       return
-//     }
-//     if(docs) {
-//       res.send(docs);
-//       return
-//     }
-//     res.status(404).json({err: 404})
+app.get('/data/:index', (req, res) => {
+  console.log('alive')
+  db.find({_id: req.params.index}, (err, docs) => {
+    if (err) {
+      res.status(500).json(err);
+      return
+    }
+    if(docs) {
+      res.send(docs);
+      return
+    }
+    res.status(404).json({err: 404})
+  })
+});
+
+// app.get('/category/:id', async(req, res) => {
+//   const id = await req.params.id;
+  
+//   const sql = `SELECT * FROM articles WHERE id="${id}"`;
+//   con.query(sql, async(err, result) => {
+//     if (err) throw err;
+//     const category = result[0].category;
+//     const sql = `SELECT * FROM articles WHERE category="${category}"`;
+//     con.query(sql, (err, result) => {
+//       if (err) throw err;
+//       res.send(result);
+//     })
+
 //   })
+  
+// })
+
+// app.post('/deleteAll', (req, res) => {
+//   deleteDatabase();
+//   res.redirect('/');
 // });
 
-app.get('/category/:id', async(req, res) => {
-  const id = await req.params.id;
+// app.post('/delete', (req, res) => {
+//   const deleteId = req.body.id;
+//   console.log(deleteId);
+//   const sql = `DELETE FROM articles WHERE id="${deleteId}"`;
+
+//   con.query(sql, (err, result) => {
+//     if (err) throw err;
+//     res.send(result);
+//   })
   
-  const sql = `SELECT * FROM articles WHERE id="${id}"`;
-  con.query(sql, async(err, result) => {
-    if (err) throw err;
-    const category = result[0].category;
-    const sql = `SELECT * FROM articles WHERE category="${category}"`;
-    con.query(sql, (err, result) => {
-      if (err) throw err;
-      res.send(result);
-    })
-
-  })
-  
-})
-
-app.post('/deleteAll', (req, res) => {
-  deleteDatabase();
-  res.redirect('/');
-});
-
-app.post('/delete', (req, res) => {
-  const deleteId = req.body.id;
-  console.log(deleteId);
-  const sql = `DELETE FROM articles WHERE id="${deleteId}"`;
-
-  con.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send(result);
-  })
-  
-});
+// });
 
 
-app.post('/update', (req, res) => {
-  const id = req.body.id;
-  const content = req.body.content;
-  const title = req.body.title;
-  console.log(title);
-  const sql = `UPDATE articles SET title="${title}", content="${content}" WHERE id="${id}"`;
+// app.post('/update', (req, res) => {
+//   const id = req.body.id;
+//   const content = req.body.content;
+//   const title = req.body.title;
+//   console.log(title);
+//   const sql = `UPDATE articles SET title="${title}", content="${content}" WHERE id="${id}"`;
 
-  con.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send(result);
-  });
+//   con.query(sql, (err, result) => {
+//     if (err) throw err;
+//     res.send(result);
+//   });
 
   // db.findOne({_id: id}, (err, docs) => {
   //   if (err) {
@@ -263,7 +265,7 @@ app.post('/update', (req, res) => {
   //     })
   //   }
   // })
-})
+// })
 
 const deleteDatabase = () => {
   db.remove({}, {multi: true}, (err, runRemove) => {
