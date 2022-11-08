@@ -17,7 +17,8 @@ export default {
         {url: "/about", text: "About"},
         {url: "/works", text: "Works"},
         {url: "/contact", text: "Contact"},
-        {url: "/article", text: "Article"}
+        // Backendをホスティングするサービスが見つからないため終了
+        // {url: "/article", text: "Article"}
       ]
     }
   }
