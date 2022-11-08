@@ -9,7 +9,8 @@
     "generate": "nuxt generate",
     "server": "node ./api/index.js",
     "glitch": "nuxt --port 5000",
-    "deploy": "git add . && git commit -m 'Improve' && git push"
+    "deploy": "git add . && git commit -m 'Improve' && git push",
+    "clear-cache": "rm -rf node_modules/.cache/hard-source"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
